@@ -41,7 +41,8 @@ namespace RoverTheExplorer
                     //Input validation
                     if (upperRightInput.Length == 2
                         && int.TryParse(upperRightInput[0], out worldX)
-                        && int.TryParse(upperRightInput[1], out worldY))
+                        && int.TryParse(upperRightInput[1], out worldY)
+                        && worldX > 0 && worldY > 0)
                     {
                         UpperRightCoordinates = new Coordinate { X = worldX, Y = worldY };
                     }
@@ -73,7 +74,7 @@ namespace RoverTheExplorer
                         else
                         {
                             Console.WriteLine("Enter valid robot face direction");
-                        }        
+                        }
                     }
                     else
                     {
@@ -106,11 +107,6 @@ namespace RoverTheExplorer
 
                     CurrentRobot = null;
                 }
-
-
-                // Wait for the user to respond before closing.
-                //Console.Write("Press 'n' and Enter to close the app, or press any other key and Enter to continue: ");
-                //if (Console.ReadLine() == "n") endSession = true;
             }
 
             return;
@@ -118,7 +114,7 @@ namespace RoverTheExplorer
 
         static void RotateRobot(char direction)
         {
-            Direction currentDirection = Directions.FirstOrDefault(w => w.Key == direction);
+            Direction currentDirection = Directions.FirstOrDefault(w => w.Key == CurrentRobot.FaceDirection.Key);
 
             if (currentDirection == null)
                 return;
@@ -144,7 +140,7 @@ namespace RoverTheExplorer
             };
 
             //Check world boundries
-            if (destinationCoordinate.X >= 0 && destinationCoordinate.Y >= 0 
+            if (destinationCoordinate.X >= 0 && destinationCoordinate.Y >= 0
                 && destinationCoordinate.X <= UpperRightCoordinates.X && destinationCoordinate.Y <= UpperRightCoordinates.Y)
             {
                 CurrentRobot.X = destinationCoordinate.X;
